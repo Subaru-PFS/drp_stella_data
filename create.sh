@@ -6,7 +6,6 @@ usage() {
     echo "" 1>&2
     echo "Usage: $0 [-f FIBERS] [-j NUMCORES] [-n]" 1>&2
     echo "" 1>&2
-    echo "    -f <FIBERS> : fibers to activate (all,lam,...)" 1>&2
     echo "    -j <NUMCORES> : number of cores to use" 1>&2
     echo "    -n : don't actually run the simulator" 1>&2
     echo "" 1>&2
@@ -16,12 +15,8 @@ usage() {
 # Parse command-line arguments
 NUMCORES=1
 DRYRUN=false
-FIBERS=lam
 while getopts "hf:j:n" opt; do
     case "${opt}" in
-        f)
-            FIBERS=${OPTARG}
-            ;;
         j)
             NUMCORES=${OPTARG}
             ;;
@@ -45,7 +40,8 @@ set -e
 # 2: Shuffled w.r.t. 1
 # 3: Odd fibers of 1
 # 4: Even fibers of 1
-( $DRYRUN ) || makePfsDesign --fibers "$FIBERS" --pfsDesignId 1 --scienceCatId 1 --scienceObjId "18 55 71 76 93 94 105"
+# Yabe-san likes having objId = 0x12, 0x37, 0x69 (18,55,105) in the set
+( $DRYRUN ) || makePfsDesign --fibers fifteen --pfsDesignId 1 --scienceCatId 1 --fracSky 0.35 --fracFluxStd 0.2 --scienceObjId "18 55 71 76 93 94 105"
 ( $DRYRUN ) || transmutePfsDesign 1 shuffle 2
 ( $DRYRUN ) || transmutePfsDesign 1 odd 3
 ( $DRYRUN ) || transmutePfsDesign 1 even 4
