@@ -7,6 +7,7 @@ usage() {
     echo "Usage: $0 [-f FIBERS] [-j NUMCORES] [-n]" 1>&2
     echo "" 1>&2
     echo "    -j <NUMCORES> : number of cores to use" 1>&2
+    echo "    -s : seed for makePfsDesign file generation (None for no seed)" 1>&2
     echo "    -n : don't actually run the simulator" 1>&2
     echo "" 1>&2
     exit 1
@@ -15,10 +16,15 @@ usage() {
 # Parse command-line arguments
 NUMCORES=1
 DRYRUN=false
-while getopts "hf:j:n" opt; do
+# By default, use a fixed seed for reproducability
+SEED=123
+while getopts "hf:j:s:n" opt; do
     case "${opt}" in
         j)
             NUMCORES=${OPTARG}
+            ;;
+        s)
+            SEED=${OPTARG}
             ;;
         n)
             DRYRUN=true
@@ -33,6 +39,15 @@ if [ -n "$1" ]; then
     usage
 fi
 
+# Handle situation where user 
+# explicitly requests no fixed seed
+if [ "$SEED" = "None" ] || [ "$SEED" = "none" ]; then
+  echo "Assigning a non-deterministic RNG seed."
+  seedstr=""
+else
+  seedstr="--seed=${SEED}"
+fi
+
 set -e
 
 # Make PfsDesign
@@ -41,7 +56,7 @@ set -e
 # 3: Odd fibers of 1
 # 4: Even fibers of 1
 # Yabe-san likes having objId = 0x12, 0x37, 0x69 (18,55,105) in the set
-( $DRYRUN ) || makePfsDesign --fibers fifteen --pfsDesignId 1 --scienceCatId 1 --fracSky 0.35 --fracFluxStd 0.2 --scienceObjId "18 55 71 76 93 94 105"
+( $DRYRUN ) || makePfsDesign --fibers fifteen --pfsDesignId 1 --scienceCatId 1 --fracSky 0.35 --fracFluxStd 0.2 --scienceObjId "18 55 71 76 93 94 105" ${seedstr}
 ( $DRYRUN ) || transmutePfsDesign 1 shuffle 2
 ( $DRYRUN ) || transmutePfsDesign 1 odd 3
 ( $DRYRUN ) || transmutePfsDesign 1 even 4
