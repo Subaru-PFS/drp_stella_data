@@ -70,7 +70,7 @@ makeSimExposure() {
 COMMANDS=()
 makeSimExposure --pfsDesignId 1 --exptime 0 --visit 0 --visit 1 --visit 2 --visit 3 --visit 4 --type bias
 makeSimExposure --pfsDesignId 1 --exptime 900 --visit 5 --visit 6 --visit 7 --visit 8 --visit 9 --visit 10 --type dark
-makeSimExposure --pfsDesignId 1 --exptime 30 --visit 11 --visit 12 --type flat --xoffset 0 --detectorMap detectorMap-sim-@DETECTOR@.fits
+makeSimExposure --pfsDesignId 1 --exptime 30 --visit 11 --visit 12 --type flat --xoffset 0
 makeSimExposure --pfsDesignId 1 --exptime 30 --visit 13 --visit 14 --type flat --xoffset 2000
 makeSimExposure --pfsDesignId 1 --exptime 30 --visit 15 --visit 16 --type flat --xoffset 4000
 makeSimExposure --pfsDesignId 1 --exptime 30 --visit 17 --visit 18 --visit 19 --type flat --xoffset -2000
