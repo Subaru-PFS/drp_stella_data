@@ -56,7 +56,7 @@ set -e
 # 3: Odd fibers of 1
 # 4: Even fibers of 1
 # Yabe-san likes having objId = 0x12, 0x37, 0x69 (18,55,105) in the set
-( $DRYRUN ) || makePfsDesign --fibers fifteen --pfsDesignId 1 --scienceCatId 1 --fracSky 0.35 --fracFluxStd 0.2 --scienceObjId "18 55 71 76 93 94 105" ${seedstr}
+( $DRYRUN ) || makePfsDesign --fibers fifteen --spectrograph 1 --pfsDesignId 1 --scienceCatId 1 --fracSky 0.35 --fracFluxStd 0.2 --scienceObjId "18 55 71 76 93 94 105" ${seedstr}
 ( $DRYRUN ) || transmutePfsDesign 1 shuffle 2
 ( $DRYRUN ) || transmutePfsDesign 1 odd 3
 ( $DRYRUN ) || transmutePfsDesign 1 even 4
